@@ -60,7 +60,8 @@ def handler(clientsock,addr, jobs):
                 if next_job == -1:
                     clientsock.sendall('done');
                     print totals
-                    return 
+                    import os
+                    os._exit(0)
                 clientsock.sendall(str(next_job))
                 try:
                     data = clientsock.recv(BUFFER_SIZE)
