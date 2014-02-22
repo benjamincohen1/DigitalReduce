@@ -1,20 +1,23 @@
 from socket import *
 import json
+import time
 def main():
     sock = socket(AF_INET, SOCK_DGRAM)
-    sock.sendto('hello', ('127.0.0.1', 1055))
+    addr = '107.170.73.117'
+    addr = 'localhost'
+    sock.sendto('hello', (addr, 1055))
 
     while True:
         # i = raw_input("Message: ")
         # i = str(x)
-        sock.sendto('Job Request', ('127.0.0.1', 1055))
+        sock.sendto('Job Request', (addr, 1055))
 
         curJob = sock.recvfrom(4096)
-        # print "Got a new job: " + str(curJob)
+        print "Got a new job: " + str(curJob)
 
         val = process_data(curJob[0])
         # print "Sending Back: " + str(val)
-        sock.sendto(str(val), ('127.0.0.1', 1055))
+        sock.sendto(str(val), (addr, 1055))
 
 
     sock.close()
@@ -23,7 +26,6 @@ def main():
 
 
 def letter_count(data):
-
     chars = {chr(x + 97): 0 for x in range(26)}
 
     for c in data:

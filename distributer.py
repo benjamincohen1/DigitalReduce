@@ -45,19 +45,29 @@ def main():
     while True:
        
         data, clientaddr = sock.recvfrom(4096)
-
+        if clientaddr not in clients:
+            clients[clientaddr] = 'brand_new'
         # print data
+        print clientaddr
+        print clients[clientaddr]
+
+        # print "\n"
         # print data
 
 
         if data == 'hello':
-            clients[clientaddr] = 'new'
-        elif data == 'Job Request':
+            # print "HANDSHAKING"
+            clients[clientaddr] = 'waiting'
+        elif data == 'Job Request' and clients[clientaddr] == 'waiting':
+            # print "SENDING DATA"
             next_job = jobs.next_job()
             if next_job == -1:
                 break
             sock.sendto(str(next_job), clientaddr)
-        else:
+            clients[clientaddr] = 'processing'
+        elif clients[clientaddr] == 'processing':
+            # print "GETTING DATA"
+
             # data, clientaddr = sock.recvfrom(4096)
             # data = '["data": ' + data + "]"
             # print data
@@ -66,6 +76,7 @@ def main():
             # print "HERE"
             for d in data:
                 totals[d] += data[d]
+            clients[clientaddr] = 'waiting'
 
         # if clientaddr in clients:
         #     # logic
