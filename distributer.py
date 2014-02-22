@@ -124,7 +124,7 @@ def handler(clientsock,addr, jobs):
                 clientsock.sendall('done');
                 print totals
                 return 
-
+            print "SUCESSFULLY GAVE OUT JOB"
             clientsock.sendall(str(next_job))
 
             data = clientsock.recv(BUFFER_SIZE)
@@ -154,6 +154,7 @@ def main():
 
     BUFF = 32768
     HOST = '127.0.0.1'# must be input parameter @TODO
+    HOST = '0.0.0.0'
     PORT = 5005 # must be input parameter @TODO
     jobs = job_list('out.txt', 100)
 

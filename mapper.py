@@ -6,7 +6,7 @@ def main():
     jobs_processed = 0
     # sock = socket(AF_INET, SOCK_DGRAM)
     addr = '107.170.73.117'
-    addr = 'localhost'
+    # addr = 'localhost'
     TCP_IP = addr
     TCP_PORT = 5005
     BUFFER_SIZE = 32768
@@ -29,9 +29,10 @@ def main():
 
         # time.sleep(.0001)
         curJob = sock.recv(BUFFER_SIZE)
+        print curJob
         if curJob == 'done':
             return -1
-        print str(curJob)
+        # print str(curJob)
 
         sock.sendall(str(process_data(curJob)))
         time.sleep(.01)
