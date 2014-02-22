@@ -60,7 +60,7 @@ def main():
             clients[clientaddr] = 'waiting'
         elif data == 'Job Request' and clients[clientaddr] == 'waiting':
             jobs_sent += 1
-            print "SENDING Job: " + int(jobs_sent)
+            print "SENDING Job: " + str(jobs_sent)
             next_job = jobs.next_job()
             if next_job == -1:
                 break
@@ -73,7 +73,8 @@ def main():
 
             # data, clientaddr = sock.recvfrom(4096)
             # data = '["data": ' + data + "]"
-            print "PROCESSING THIS: " + data
+            # print "PROCESSING THIS: " + data
+            print "Processing Job: " + str(jobs_sent)
             data =  json.loads(data)
 
             # print "HERE"
