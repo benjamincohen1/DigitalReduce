@@ -11,8 +11,8 @@ class job_list(object):
 
         length = len(flat_text)
         allJobs = []
-        num_jobs = 1024
-        for x in range(length/1024):
+        num_jobs = 128
+        for x in range(length/128):
             
             allJobs.append(flat_text[x * (length/num_jobs):(x+1) * (length/num_jobs)])
 
@@ -20,6 +20,7 @@ class job_list(object):
         self.allJobs = allJobs
         self.num = 0
         self.jobs = len(allJobs)
+        print "CREATED WITH " + str(length/128) + " jobs"
 
 
     def __iter__(self):
@@ -45,7 +46,7 @@ def handler(clientsock,addr, jobs):
         data = clientsock.recv(88)
 
 
-        print data
+        # print data
         if data == 'Job Request':
             print "Giving out a job: " + str(jobs_sent)
             jobs_sent += 1
@@ -59,7 +60,7 @@ def handler(clientsock,addr, jobs):
 
             data = clientsock.recv(BUFFER_SIZE)
 
-            print data
+            # print data
             data = json.loads(data)
 
             for x in data:
