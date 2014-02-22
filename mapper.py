@@ -25,6 +25,8 @@ def main():
     while True:
         # time.sleep(.0001)
         # if state == 'requesting':
+        time.sleep(.01)
+
         sock.send('Job Request')
 
         # time.sleep(.0001)
