@@ -43,28 +43,37 @@ def handler(clientsock,addr, jobs):
     BUFFER_SIZE = 1024
     jobs_sent = 0
     while 1:
-        data = clientsock.recv(88)
+        try:
+            data = clientsock.recv(88)
 
-
-        # print data
-        if data == 'Job Request':
-            print "Giving out a job: " + str(jobs_sent)
-            jobs_sent += 1
-            next_job = jobs.next_job()
-            if next_job == -1:
-                clientsock.sendall('done');
-                print totals
-                return 
-            print "SUCESSFULLY GAVE OUT JOB"
-            clientsock.sendall(str(next_job))
-
-            data = clientsock.recv(BUFFER_SIZE)
 
             # print data
-            data = json.loads(data)
+            if data == 'Job Request':
+                print "Giving out a job: " + str(jobs_sent)
+                jobs_sent += 1
+                next_job = jobs.next_job()
+                if next_job == -1:
+                    clientsock.sendall('done');
+                    print totals
+                    return 
+                print "SUCESSFULLY GAVE OUT JOB"
+                clientsock.sendall(str(next_job))
+                try:
+                    data = clientsock.recv(BUFFER_SIZE)
+                except:
+                    data = ""
+                while(data == ""):
+                    try:
+                        data = clientsock.recv(BUFFER_SIZE)
+                    except:
+                        pass
+                # print data
+                data = json.loads(data)
 
-            for x in data:
-                totals[x] += data[x]
+                for x in data:
+                    totals[x] += data[x]
+            except:
+                pass
 
 
 def main():
