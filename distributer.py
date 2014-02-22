@@ -11,8 +11,8 @@ class job_list(object):
 
         length = len(flat_text)
         allJobs = []
-        num_jobs = 128
-        for x in range(length/128):
+
+        for x in range(num_jobs):
             
             allJobs.append(flat_text[x * (length/num_jobs):(x+1) * (length/num_jobs)])
 
@@ -74,7 +74,7 @@ def main():
     HOST = '127.0.0.1'# must be input parameter @TODO
     HOST = '0.0.0.0'
     PORT = 5005 # must be input parameter @TODO
-    jobs = job_list('out.txt', 1000)
+    jobs = job_list('out.txt', 600)
 
 
     ADDR = (HOST, PORT)
