@@ -4,7 +4,7 @@ import time
 def main():
     sock = socket(AF_INET, SOCK_DGRAM)
     addr = '107.170.73.117'
-    addr = 'localhost'
+    # addr = 'localhost'
     sock.sendto('hello', (addr, 1055))
 
     while True:

@@ -65,12 +65,14 @@ def main():
                 break
             sock.sendto(str(next_job), clientaddr)
             clients[clientaddr] = 'processing'
+        elif data = 'Job Request' and clients[clientaddr] != 'waiting':
+            pass
         elif clients[clientaddr] == 'processing':
             # print "GETTING DATA"
 
             # data, clientaddr = sock.recvfrom(4096)
             # data = '["data": ' + data + "]"
-            # print data
+            print "PROCESSING THIS: " + data
             data =  json.loads(data)
 
             # print "HERE"
