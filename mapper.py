@@ -1,23 +1,54 @@
-from socket import *
+# from socket import *
+import socket
 import json
 import time
 def main():
-    sock = socket(AF_INET, SOCK_DGRAM)
+    jobs_processed = 0
+    # sock = socket(AF_INET, SOCK_DGRAM)
     addr = '107.170.73.117'
+    addr = 'localhost'
+    TCP_IP = addr
+    TCP_PORT = 5005
+    BUFFER_SIZE = 32768
+
     # addr = 'localhost'
-    sock.sendto('hello', (addr, 1055))
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.connect((TCP_IP, TCP_PORT))
+
+    sock.sendall('hello')
+    time.sleep(.01)
+    # sock.sendto('hello', (addr, 1055))
+    state = 'requesting'
+    oldJob = -1
+    # sock.sendall('Job Request')
 
     while True:
-        # i = raw_input("Message: ")
-        # i = str(x)
-        sock.sendto('Job Request', (addr, 1055))
+        # time.sleep(.0001)
+        # if state == 'requesting':
+        sock.send('Job Request')
 
-        curJob = sock.recvfrom(4096)
-        print "Got a new job: " + str(curJob)
+        # time.sleep(.0001)
+        curJob = sock.recv(BUFFER_SIZE)
+        if curJob == 'done':
+            return -1
+        print str(curJob)
 
-        val = process_data(curJob[0])
-        # print "Sending Back: " + str(val)
-        sock.sendto(str(val), (addr, 1055))
+        sock.sendall(str(process_data(curJob)))
+        time.sleep(.01)
+        # # print curJob
+        # state = 'processing'
+        # print str(len(curJob)) + "\n"
+        # print "Got a new job: " + str(jobs_processed)
+
+        # # elif state == 'processing':
+        # val = process_data(curJob)
+        # jobs_processed += 1
+        # # print "Sending Job: " + str(jobs_processed)
+        # # print "Sending Back: " + str(val)
+
+        # sock.sendall(str(val))
+        # state = 'requesting'
+
 
 
     sock.close()
