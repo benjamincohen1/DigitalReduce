@@ -11,7 +11,8 @@ class job_list(object):
 
         length = len(flat_text)
         allJobs = []
-        for x in range(num_jobs):
+        num_jobs = 1024
+        for x in range(length/1024):
             
             allJobs.append(flat_text[x * (length/num_jobs):(x+1) * (length/num_jobs)])
 

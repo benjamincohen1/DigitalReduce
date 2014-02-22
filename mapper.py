@@ -9,7 +9,7 @@ def main():
     # addr = 'localhost'
     TCP_IP = addr
     TCP_PORT = 5005
-    BUFFER_SIZE = 32768
+    BUFFER_SIZE = 1024
 
     # addr = 'localhost'
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
