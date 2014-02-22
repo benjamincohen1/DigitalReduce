@@ -41,7 +41,7 @@ def main():
     sock.bind(('', 1055))
 
     jobs = job_list('out.txt', 10000)
-
+    jobs_sent = 0
     while True:
        
         data, clientaddr = sock.recvfrom(4096)
@@ -59,13 +59,14 @@ def main():
             # print "HANDSHAKING"
             clients[clientaddr] = 'waiting'
         elif data == 'Job Request' and clients[clientaddr] == 'waiting':
-            # print "SENDING DATA"
+            jobs_sent += 1
+            print "SENDING Job: " + int(jobs_sent)
             next_job = jobs.next_job()
             if next_job == -1:
                 break
             sock.sendto(str(next_job), clientaddr)
             clients[clientaddr] = 'processing'
-        elif data = 'Job Request' and clients[clientaddr] != 'waiting':
+        elif data == 'Job Request' and clients[clientaddr] != 'waiting':
             pass
         elif clients[clientaddr] == 'processing':
             # print "GETTING DATA"
