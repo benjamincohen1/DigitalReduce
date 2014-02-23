@@ -66,6 +66,9 @@ def handler(clientsock,addr, jobs):
                 if next_job == -1:
                     clientsock.sendall('done');
                     print totals
+                    f = open(os.path.join(UPLOAD_FOLDER, 'results.txt'), 'w')
+                    f.write(str(totals))
+                    f.close()
                     import os
                     print str(time.time() + t) + " seconds"
                     os._exit(0)
