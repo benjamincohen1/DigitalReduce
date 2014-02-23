@@ -22,7 +22,14 @@ class job_list(object):
 
         for line in i:
             allJobs.append(line.strip())
+        p2 = os.path.join(UPLOAD_FOLDER, fun_file)
+        i = open(p)
+        s = ""
+        for line in i:
+            s += line
+        exec s
 
+        self.function = process
         # self.allJobs = [x for x in range(1000,1150)]
         self.allJobs = allJobs
         self.num = 0
@@ -31,6 +38,9 @@ class job_list(object):
 
     def __iter__(self):
         return self
+
+    def function(self):
+        return self.function
 
     def __next__(self):
         return self.allJobs.next()
@@ -48,7 +58,9 @@ def handler(clientsock,addr, jobs):
 
     BUFFER_SIZE = 1024
     jobs_sent = 0
+    fnctn = jobs.function()
     f = inspect.getsource(hsh2)
+
     global done
     print f
     clientsock.send(str(f))

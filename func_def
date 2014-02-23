@@ -1,4 +1,4 @@
-def hsh2(h):
+def process(h):
     import hashlib
 
     for r in range(1000000):
