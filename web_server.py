@@ -27,7 +27,14 @@ def homepage():
     return "Initialized"
 
 
+@app.route('/results')
+def view_results():
+	pth = os.path.join(app.config['UPLOAD_FOLDER'], 'results.txt')
+	v = ""
+	for line in open(pth):
+		v += line
 
+	return v
 @app.route('/new_job', methods = ['GET', 'POST'])
 def new_job():
     if request.method == 'POST':
@@ -80,7 +87,7 @@ def start_job():
     fl = open(pth)
     for line in fl:
 	s += str(line.strip()) + "\n"
-    return s
+    return redirect(url_for('view_results'))
 
 
 

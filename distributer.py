@@ -6,7 +6,7 @@ import json
 import inspect
 import os
 UPLOAD_FOLDER = '/Users/bencoh/Dropbox/McHacks/uploads'
-
+done = False
 UPLOAD_FOLDER = '/root'
 totals = {}
 t = 100
@@ -49,7 +49,7 @@ def handler(clientsock,addr, jobs):
     BUFFER_SIZE = 1024
     jobs_sent = 0
     f = inspect.getsource(hsh2)
-
+    global done
     print f
     clientsock.send(str(f))
     while 1:
@@ -71,8 +71,9 @@ def handler(clientsock,addr, jobs):
                     f = open(pth, 'w')
                     f.write(str(totals))
                     f.close()
+		    done = True
                     # import os
-                    os._exit(-1)
+                    #os._exit(-1)
 
                     print str(time.time() + t) + " seconds"
                     return -1
@@ -86,7 +87,6 @@ def handler(clientsock,addr, jobs):
                         data = clientsock.recv(BUFFER_SIZE)
                     except:
                         pass
-                print data
                 totals[next_job] = data
                
 
@@ -106,7 +106,7 @@ def main(fl, fl2):
     PORT = 5005 # must be input parameter @TODO
     print "BEFORE JOBS LIST"
     jobs = job_list(fl, fl2)
-
+    global done
     print "GOT A JOBS LIST"
     ADDR = (HOST, PORT)
     serversock = socket(AF_INET, SOCK_STREAM)
@@ -123,7 +123,10 @@ def main(fl, fl2):
             first = False
         print '...connected from:', addr
         v = thread.start_new_thread(handler, (clientsock, addr, jobs))
-        print "WE HAVE V: " + str(v)
+        if done == True:
+		print "RETURNING"
+		return 'DONE'
+	print "WE HAVE V: " + str(v)
         if v == -1:
             return str(-1)
 
