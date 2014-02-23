@@ -8,7 +8,7 @@ def main():
             jobs_processed = 0
             # sock = socket(AF_INET, SOCK_DGRAM)
             addr = '107.170.73.117'
-            # addr = 'localhost'
+            addr = 'localhost'
             TCP_IP = addr
             TCP_PORT = 5005
             BUFFER_SIZE = 1024

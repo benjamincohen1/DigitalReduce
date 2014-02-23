@@ -38,7 +38,7 @@ def new_job():
         print "GOT FILE"
         if fl and map_fl:
             filename = secure_filename(fl.filename)
-            print os.path.join(app.config['UPLOAD_FOLDER'], 'data_ile')
+            print os.path.join(app.config['UPLOAD_FOLDER'], 'datafile')
 
             fl.save(os.path.join(app.config['UPLOAD_FOLDER'], 'datafile'))
             map_fl.save(os.path.join(app.config['UPLOAD_FOLDER'], 'funcfile'))

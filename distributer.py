@@ -121,7 +121,8 @@ def main(fl, fl2):
             t  = -1 * time.time()
             first = False
         print '...connected from:', addr
-        v = thread.start_new_thread(handler, (clientsock, addr, jobs))
+        v = thread.start_new_thread(handler, (clientsock, addr, jobs)).join()
+        print "WE HAVE V: " + str(v)
         if v == -1:
             return -1
 
