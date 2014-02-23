@@ -24,7 +24,7 @@ client = None
 def homepage():
     global client
     client = spinner.initialize()
-    return "Initialized"
+    return render_template('home.html', **{'Content': 'Initialized'})
 
 
 @app.route('/results')
