@@ -76,7 +76,7 @@ def handler(clientsock,addr, jobs):
 
 
 def main():
-    totals = {chr(x + 97): 0 for x in range(26)}
+    totals = {chr(x + 97): 0 for x in range(15)}
 
     BUFF = 32768
     HOST = '127.0.0.1'# must be input parameter @TODO
@@ -95,7 +95,8 @@ def main():
         print 'waiting for connection...'
         clientsock, addr = serversock.accept()
         if first:
-            global t = -1 * time.time()
+            global t 
+            t  = -1 * time.time()
             first = False
         print '...connected from:', addr
         thread.start_new_thread(handler, (clientsock, addr, jobs))
