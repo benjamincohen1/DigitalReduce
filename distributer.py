@@ -2,6 +2,7 @@ from utils import *
 from socket import *
 import thread
 import time
+from func_def import *
 import json
 import inspect
 import os
@@ -12,24 +13,21 @@ totals = {}
 t = 100
 class job_list(object):
     def __init__(self, text_file, fun_file):
-        print "HURR 1"
         allJobs = []
         # UPLOAD_FOLDER = '/Users/bencoh/Dropbox/McHacks/uploads'
         p = os.path.join(UPLOAD_FOLDER, text_file)
-        print p
         i = open(p)
-        print "HURR 2"
 
         for line in i:
             allJobs.append(line.strip())
         p2 = os.path.join(UPLOAD_FOLDER, fun_file)
-        i = open(p)
+        i = open(p2)
         s = ""
         for line in i:
             s += line
-        exec s
+	
 
-        self.function = process
+        self.function = s
         # self.allJobs = [x for x in range(1000,1150)]
         self.allJobs = allJobs
         self.num = 0
@@ -58,11 +56,14 @@ def handler(clientsock,addr, jobs):
 
     BUFFER_SIZE = 1024
     jobs_sent = 0
-    fnctn = jobs.function()
+
+
+    #print process(100)
+
+ 
     f = inspect.getsource(hsh2)
 
     global done
-    print f
     clientsock.send(str(f))
     while 1:
         try:
@@ -171,5 +172,10 @@ def prepare_jobs(text_file, num_jobs):
     return allJobs
 
 if __name__ == "__main__":
-    main('datafile', 'tmp')
+    #main('datafile', 'tmp')i
+    jobs = job_list('datafile', 'func_def')
+    print jobs.function
+    exec jobs.function
+
+    print process(10)
     # prepare_jobs('out.txt', 1000000)
