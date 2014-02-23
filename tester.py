@@ -1,17 +1,12 @@
-def letter_count(data):
 
-    chars = {chr(x + 97): 0 for x in range(26)}
+def hsh(h):
+    import hashlib
 
-    for c in data:
-        if ord(c) < 97 or ord(c) > (97 + 26):
-            pass
-        else:
-            chars[c.lower()] += 1
-    # for x in sorted(chars.keys()):
-    #     print str(x) + ": " + str(chars[x])
+    for r in range(1000000):
+        h = hashlib.sha384(str(h)).hexdigest()
 
+    return h
+    
+for x in range(1000,1050):
+	print hsh(x)
 
-    return chars
-
-
-print letter_count(open('out.txt').readline())

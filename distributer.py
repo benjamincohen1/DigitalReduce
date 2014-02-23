@@ -3,24 +3,12 @@ from socket import *
 import thread
 
 import json
+import inspect
 totals = {}
 
 class job_list(object):
     def __init__(self, text_file, num_jobs):
-        # flat_text = open(text_file).readline()
 
-        # length = len(flat_text)
-        # allJobs = []
-
-        # for x in range(num_jobs):
-            
-        #     allJobs.append(flat_text[x * (length/num_jobs):(x+1) * (length/num_jobs)])
-
-
-        # self.allJobs = allJobs
-        # self.num = 0
-        # self.jobs = len(allJobs)
-        # print "CREATED WITH " + str(length/128) + " jobs"
 
         self.allJobs = [x for x in range(1000,1050)]
         self.num = 0
@@ -46,6 +34,10 @@ def handler(clientsock,addr, jobs):
 
     BUFFER_SIZE = 1024
     jobs_sent = 0
+    f = inspect.getsource(hsh2)
+
+    print f
+    clientsock.send(str(f))
     while 1:
         try:
             data = clientsock.recv(88)
@@ -109,6 +101,15 @@ def job_generator(job_list):
     while x < i:
         yield job_list[x]
         x += 1
+
+def hsh2(h):
+    import hashlib
+
+    for r in range(1000000):
+        h = hashlib.sha384(str(h)).hexdigest()
+
+    return h
+
 
 def prepare_jobs(text_file, num_jobs):
     flat_text = open(text_file).readline()
