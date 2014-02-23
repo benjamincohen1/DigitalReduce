@@ -7,7 +7,7 @@ import inspect
 import os
 UPLOAD_FOLDER = '/Users/bencoh/Dropbox/McHacks/uploads'
 
-
+UPLOAD_FOLDER = '/root'
 totals = {}
 t = 100
 class job_list(object):
@@ -63,15 +63,17 @@ def handler(clientsock,addr, jobs):
                 jobs_sent += 1
                 next_job = jobs.next_job()
                 print "NJ: " + str(next_job)
-                if next_job == -1:
+                if next_job == -1 or next_job == str(-1):
                     clientsock.sendall('done');
                     print totals
-                    f = open(os.path.join(UPLOAD_FOLDER, 'results.txt'), 'w')
+                    pth = os.path.join(UPLOAD_FOLDER, 'results.txt')
+                    print pth
+                    f = open(pth, 'w')
                     f.write(str(totals))
                     f.close()
                     import os
                     print str(time.time() + t) + " seconds"
-                    os._exit(0)
+                    return -1
                 clientsock.sendall(str(next_job))
                 try:
                     data = clientsock.recv(BUFFER_SIZE)
