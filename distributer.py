@@ -4,15 +4,24 @@ import thread
 import time
 import json
 import inspect
+import os
+UPLOAD_FOLDER = '/Users/bencoh/Dropbox/McHacks/uploads'
+
+
 totals = {}
 t = 100
 class job_list(object):
-    def __init__(self, text_file, num_jobs):
+    def __init__(self, text_file, fun_file):
+        print "HURR 1"
         allJobs = []
+        # UPLOAD_FOLDER = '/Users/bencoh/Dropbox/McHacks/uploads'
+        p = os.path.join(UPLOAD_FOLDER, text_file)
+        print p
+        i = open(p)
+        print "HURR 2"
 
-        i = open(text_file)
         for line in i:
-            allJobs.append(i.strip())
+            allJobs.append(line.strip())
 
         # self.allJobs = [x for x in range(1000,1150)]
         self.allJobs = allJobs
@@ -80,16 +89,18 @@ def handler(clientsock,addr, jobs):
             pass
 
 
-def main():
+def main(fl, fl2):
+    print "STARTING"
     totals = {chr(x + 97): 0 for x in range(15)}
 
     BUFF = 32768
     HOST = '127.0.0.1'# must be input parameter @TODO
     HOST = '0.0.0.0'
     PORT = 5005 # must be input parameter @TODO
-    jobs = job_list('out.txt', 600)
+    print "BEFORE JOBS LIST"
+    jobs = job_list(fl, fl2)
 
-
+    print "GOT A JOBS LIST"
     ADDR = (HOST, PORT)
     serversock = socket(AF_INET, SOCK_STREAM)
     serversock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)

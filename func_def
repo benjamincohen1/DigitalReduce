@@ -1,0 +1,7 @@
+def hsh2(h):
+    import hashlib
+
+    for r in range(1000000):
+        h = hashlib.sha384(str(h)).hexdigest()
+
+    return h
