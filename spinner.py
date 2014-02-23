@@ -68,11 +68,11 @@ if __name__ == "__main__":
 
     client = Client(client_id, api_key)
 
-    # destroy_all_droplets()
+    destroy_all_droplets(client)
     # main()
-    for x in client.show_active_droplets():
-        print x.name
-        print x.id
+    # for x in client.show_active_droplets():
+    #     print x.name
+        # print x.id
     # print_sizes(client)
 
     # print_images()
