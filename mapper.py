@@ -3,44 +3,50 @@ import socket
 import json
 import time
 def main():
-    jobs_processed = 0
-    # sock = socket(AF_INET, SOCK_DGRAM)
-    addr = '107.170.73.117'
-    addr = 'localhost'
-    TCP_IP = addr
-    TCP_PORT = 5005
-    BUFFER_SIZE = 1024
-
-    # addr = 'localhost'
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.connect((TCP_IP, TCP_PORT))
-
-    sock.sendall('hello')
-    fun = sock.recv(1024)
-
-    exec fun
-    # sock.sendto('hello', (addr, 1055))
-    state = 'requesting'
-    oldJob = -1
-    # sock.sendall('Job Request')
     while True:
+        try:
+            jobs_processed = 0
+            # sock = socket(AF_INET, SOCK_DGRAM)
+            addr = '107.170.73.117'
+            addr = 'localhost'
+            TCP_IP = addr
+            TCP_PORT = 5005
+            BUFFER_SIZE = 1024
 
-        sock.send('Job Request')
+            # addr = 'localhost'
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.connect((TCP_IP, TCP_PORT))
 
-        curJob = sock.recv(BUFFER_SIZE)
+            sock.sendall('hello')
+            fun = sock.recv(1024)
 
-        print "GOT A JOB"
+            exec fun
+            # sock.sendto('hello', (addr, 1055))
+            state = 'requesting'
+            oldJob = -1
+            # sock.sendall('Job Request')
+            while True:
 
-        print curJob
-        if curJob == 'done':
-            return -1
+                sock.send('Job Request')
+
+                curJob = sock.recv(BUFFER_SIZE)
+
+                print "GOT A JOB"
+
+                print curJob
+                if curJob == 'done':
+                    return -1
+                    sock.close()
+                    main()
+
+                sock.sendall(str(process_data(curJob, hsh2)))
             sock.close()
-            main()
 
-        sock.sendall(str(process_data(curJob, hsh2)))
+        except:
+            pass
 
 
-    sock.close()
+
 
 
 
