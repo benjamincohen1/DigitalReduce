@@ -2,12 +2,12 @@
 <html>
 <body>
 
-<div id="container" style="width:500px">
+<div id="container" style="width:800px">
 
 <div id="header" style="background-color:#FFA500;">
 <h1 style="margin-bottom:0;">Ocean Compute</h1></div>
 
-<div id="menu" style="background-color:#FFD700;height:200px;width:100px;float:left;">
+<div id="menu" style="background-color:#FFD700;height:600px;width:100px;float:left;">
 <b><a href = {{url_for('homepage')}}>Home</a></b><br>
 <a href = {{url_for('turn_off_all')}}>Turn All Off</a><br>
 <a href = {{url_for('turn_on_form')}}>Turn On</a><br>
@@ -20,7 +20,7 @@
 
 </div>
 
-<div id="content" style="background-color:#EEEEEE;height:200px;width:400px;float:left;">
+<div id="content" style="background-color:#EEEEEE;height:600px;width:600px;float:left;">
 	{{content}}
 	{% if Spawn%}
 	<form action="" method=post enctype=multipart/form-data>

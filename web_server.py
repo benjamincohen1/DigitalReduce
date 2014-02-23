@@ -2,7 +2,7 @@ import sys
 import os
 from werkzeug.utils import secure_filename
 UPLOAD_FOLDER = '/Users/bencoh/Dropbox/McHacks/uploads'
-# UPLOAD_FOLDER = '/root'
+UPLOAD_FOLDER = '/root'
 import distributer
 
 import spinner
@@ -25,7 +25,6 @@ def homepage():
     print 'hrr'
     global client
     client = spinner.initialize()
-
     return render_template("main.html", **{'content' : 'Initialized'})
 
 
@@ -36,7 +35,7 @@ def view_results():
     for line in open(pth):
         v += line
 
-    return v
+    return render_template('main.html', **{'content': v})
     
 @app.route('/new_job', methods = ['GET', 'POST'])
 def new_job():
@@ -107,8 +106,11 @@ def turn_off_all():
 
 @app.route('/spawn/<num_instances>')
 def spawn(num_instances):
+    print "SPINNING"
+    import time
+    t = time.sleep(1)
     spinner.spawn(client, num_instances = int(num_instances))
-
+    print "SPUN UP"
     return render_template('main.html', **{'content': "Sucessfully Spawned New Instances"})
 
 

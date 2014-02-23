@@ -8,7 +8,7 @@ import inspect
 import os
 UPLOAD_FOLDER = '/Users/bencoh/Dropbox/McHacks/uploads'
 done = False
-# UPLOAD_FOLDER = '/root'
+UPLOAD_FOLDER = '/root'
 totals = {}
 t = 100
 class job_list(object):
@@ -154,7 +154,7 @@ def hsh2(h):
     import hashlib
 
     for r in range(1000000):
-        h = hashlib.sha384(str(h)).hexdigest()
+        h = hashlib.sha224(str(h)).hexdigest()
 
     return h
 

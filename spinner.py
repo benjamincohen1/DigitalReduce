@@ -8,9 +8,13 @@ def spawn(client, num_instances = 5):
 
 
     client = Client(client_id, api_key)
+    print "HERE"
     images = client.images()
     sizes = client.sizes()
-
+    print 'before create'
+    for x in client.show_active_droplets():
+        print x.id
+    print 'after create'
     job_id = 'job'
     for x in range(num_instances):
         drop_name = job_id + '-' + str(x)
@@ -68,13 +72,13 @@ if __name__ == "__main__":
 
     client = Client(client_id, api_key)
 
-    destroy_all_droplets(client)
-    # main()
+    # destroy_all_droplets(client)
+    #main()
     # for x in client.show_active_droplets():
     #     print x.name
         # print x.id
     # print_sizes(client)
-
+    spawn(client, 4)
     # print_images()
     # print_sizes()
     # print_regions()
