@@ -2,7 +2,7 @@ import sys
 import os
 from werkzeug.utils import secure_filename
 UPLOAD_FOLDER = '/Users/bencoh/Dropbox/McHacks/uploads'
-
+UPLOAD_FOLDER = '/root'
 import distributer
 
 import spinner
@@ -120,4 +120,5 @@ def on(num_instances):
 
 
 if __name__ == '__main__':
-    app.run()   
+    #app.run()
+    app.run(host='0.0.0.0',host=80)   

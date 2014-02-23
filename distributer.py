@@ -68,11 +68,12 @@ def handler(clientsock,addr, jobs):
                     print totals
                     pth = os.path.join(UPLOAD_FOLDER, 'results.txt')
                     print pth
-                    os._exit(-1)
                     f = open(pth, 'w')
                     f.write(str(totals))
                     f.close()
-                    import os
+                    # import os
+                    os._exit(-1)
+
                     print str(time.time() + t) + " seconds"
                     return -1
                 clientsock.sendall(str(next_job))
@@ -121,10 +122,10 @@ def main(fl, fl2):
             t  = -1 * time.time()
             first = False
         print '...connected from:', addr
-        v = thread.start_new_thread(handler, (clientsock, addr, jobs)).join()
+        v = thread.start_new_thread(handler, (clientsock, addr, jobs))
         print "WE HAVE V: " + str(v)
         if v == -1:
-            return -1
+            return str(-1)
 
 def job_generator(job_list):
     i = len(job_list)
@@ -155,5 +156,5 @@ def prepare_jobs(text_file, num_jobs):
     return allJobs
 
 if __name__ == "__main__":
-    main()
+    main('datafile', 'tmp')
     # prepare_jobs('out.txt', 1000000)
