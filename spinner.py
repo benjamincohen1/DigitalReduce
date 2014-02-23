@@ -12,9 +12,9 @@ def main():
     sizes = client.sizes()
 
     job_id = 'job'
-    for x in range(3):
+    for x in range(20):
         drop_name = job_id + '-' + str(x)
-        client.create_droplet(name=drop_name, image_id = 2390163)
+        client.create_droplet(name=drop_name, image_id = 2392340, size_id=61)
 
 def kill_all_droplets():
     for x in client.show_active_droplets():
@@ -23,7 +23,10 @@ def kill_all_droplets():
 
 def destroy_all_droplets():
     for x in client.show_active_droplets():
-        client.destroy_droplet(x.id)
+        if x.id == 1195790 or x.id == str(1195790):
+            pass
+        else:
+            client.destroy_droplet(x.id)
 
 def print_sizes():
     for x in client.sizes():

@@ -1,7 +1,7 @@
 from utils import *
 from socket import *
 import thread
-
+import time
 import json
 import inspect
 totals = {}
@@ -10,7 +10,7 @@ class job_list(object):
     def __init__(self, text_file, num_jobs):
 
 
-        self.allJobs = [x for x in range(1000,1050)]
+        self.allJobs = [x for x in range(1000,1150)]
         self.num = 0
         self.jobs = len(self.allJobs)
 
@@ -90,10 +90,13 @@ def main():
     serversock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
     serversock.bind(ADDR)
     serversock.listen(50)
+    first = True
     while 1:
         print 'waiting for connection...'
         clientsock, addr = serversock.accept()
-        t = time.time()
+        if first:
+            global t = -1 * time.time()
+            first = False
         print '...connected from:', addr
         thread.start_new_thread(handler, (clientsock, addr, jobs))
 
