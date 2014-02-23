@@ -5,7 +5,7 @@ import thread
 import json
 import inspect
 totals = {}
-
+t = 100
 class job_list(object):
     def __init__(self, text_file, num_jobs):
 
@@ -53,6 +53,7 @@ def handler(clientsock,addr, jobs):
                     clientsock.sendall('done');
                     print totals
                     import os
+                    print str(time.time() + t) + " seconds"
                     os._exit(0)
                 clientsock.sendall(str(next_job))
                 try:
@@ -88,10 +89,11 @@ def main():
     serversock = socket(AF_INET, SOCK_STREAM)
     serversock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
     serversock.bind(ADDR)
-    serversock.listen(5)
+    serversock.listen(50)
     while 1:
         print 'waiting for connection...'
         clientsock, addr = serversock.accept()
+        t = time.time()
         print '...connected from:', addr
         thread.start_new_thread(handler, (clientsock, addr, jobs))
 
