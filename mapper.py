@@ -35,7 +35,7 @@ def main():
 
                 print curJob
                 if curJob == 'done':
-                    return -1
+                    # return -1
                     sock.close()
                     main()
 
