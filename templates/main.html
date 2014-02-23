@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<div id="container" style="width:500px">
+
+<div id="header" style="background-color:#FFA500;">
+<h1 style="margin-bottom:0;">Ocean Compute</h1></div>
+
+<div id="menu" style="background-color:#FFD700;height:200px;width:100px;float:left;">
+<b><a href = {{url_for('homepage')}}>Home</a></b><br>
+<a href = {{url_for('turn_off_all')}}>Turn All Off</a><br>
+<a href = {{url_for('turn_on_form')}}>Turn On</a><br>
+<a href = {{url_for('spawn_form')}}>Spawn</a><br>
+
+<a href = {{url_for('kill_all')}}>Kill All</a><br>
+<a href = {{url_for('new_job')}}>New Job</a><br>
+<a href = {{url_for('view_results')}}>Results</a><br>
+
+
+</div>
+
+<div id="content" style="background-color:#EEEEEE;height:200px;width:400px;float:left;">
+	{{content}}
+	{% if Spawn%}
+	<form action="" method=post enctype=multipart/form-data>
+        <p><input type=text name=num>
+
+     <input type=submit value=Submit>
+	{% endif %}
+	{% if new_job%}
+
+	<h1>Upload new File</h1>
+        <form action="" method=post enctype=multipart/form-data>
+        <p><input type=file name=datafile>
+        <p><input type=file name=mapfile>
+
+         <input type=submit value=Upload>
+        </form>
+
+      {% endif %}
+
+      {%if onn %}
+      
+        <form action="" method=post enctype=multipart/form-data>
+        <p><input type=text name=num>
+
+         <input type=submit value=Submit>
+     </form>
+       {% endif %}
+
+
+</div>
+
+<div id="footer" style="background-color:#FFA500;clear:both;text-align:center;">
+	Where an ocean of computing power is just a click away.
+</div>
+
+</div>
+
+</body>
+</html>

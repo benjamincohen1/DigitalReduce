@@ -2,13 +2,13 @@ from utils import *
 from socket import *
 import thread
 import time
-from func_def import *
+# from func_def import *
 import json
 import inspect
 import os
 UPLOAD_FOLDER = '/Users/bencoh/Dropbox/McHacks/uploads'
 done = False
-UPLOAD_FOLDER = '/root'
+# UPLOAD_FOLDER = '/root'
 totals = {}
 t = 100
 class job_list(object):

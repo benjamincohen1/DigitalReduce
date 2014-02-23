@@ -2,7 +2,7 @@ import sys
 import os
 from werkzeug.utils import secure_filename
 UPLOAD_FOLDER = '/Users/bencoh/Dropbox/McHacks/uploads'
-UPLOAD_FOLDER = '/root'
+# UPLOAD_FOLDER = '/root'
 import distributer
 
 import spinner
@@ -22,19 +22,22 @@ client = None
 
 @app.route('/')
 def homepage():
+    print 'hrr'
     global client
     client = spinner.initialize()
-    return render_template('home.html', **{'Content': 'Initialized'})
+
+    return render_template("main.html", **{'content' : 'Initialized'})
 
 
 @app.route('/results')
 def view_results():
-	pth = os.path.join(app.config['UPLOAD_FOLDER'], 'results.txt')
-	v = ""
-	for line in open(pth):
-		v += line
+    pth = os.path.join(app.config['UPLOAD_FOLDER'], 'results.txt')
+    v = ""
+    for line in open(pth):
+        v += line
 
-	return v
+    return v
+    
 @app.route('/new_job', methods = ['GET', 'POST'])
 def new_job():
     if request.method == 'POST':
@@ -55,17 +58,7 @@ def new_job():
 
 
     print "NOT POST"
-    return '''
-        <!doctype html>
-        <title>Upload new File</title>
-        <h1>Upload new File</h1>
-        <form action="" method=post enctype=multipart/form-data>
-        <p><input type=file name=datafile>
-        <p><input type=file name=mapfile>
-
-         <input type=submit value=Upload>
-        </form>
-        '''
+    return render_template('main.html', **{'new_job' : True, 'content': "New Job Creation"})
 
 
 @app.route('/start_job')
@@ -86,7 +79,7 @@ def start_job():
     #return pth
     fl = open(pth)
     for line in fl:
-	s += str(line.strip()) + "\n"
+        s += str(line.strip()) + "\n"
     return redirect(url_for('view_results'))
 
 
@@ -96,23 +89,59 @@ def kill_all():
     try:
         spinner.destroy_all_droplets(client)
     except:
-        return "Something went wrong"
+        return render_template('main.html', **{'content': "Couldn't kill all instances"})
 
-    return "Killed Em"
+
+    return render_template('main.html', **{'content': "Sucessfully Killed All Instances"})
+
 
 @app.route('/off_all')
 def turn_off_all():
     try:
         spinner.kill_all_droplets(client)
     except:
-        return "Something went wrong"
-    return "Turned Em Off"
+        return render_template("main.html", **{'content' : 'Something Went Wrong'})
+    return render_template("main.html", **{'content' : 'Turned Machines off Sucessfully'})
+
 
 
 @app.route('/spawn/<num_instances>')
 def spawn(num_instances):
     spinner.spawn(client, num_instances = int(num_instances))
-    return "Spawned " + str(num_instances) + " instances."
+
+    return render_template('main.html', **{'content': "Sucessfully Spawned New Instances"})
+
+
+@app.route('/spawn_form', methods = ['POST', 'GET'])
+def spawn_form():
+    if request.method == 'POST':
+
+        print "POSTING"
+        fl = request.form['num']
+
+
+        if fl != None:
+            u = url_for('spawn',num_instances=fl)
+            return redirect(u)
+
+    return render_template('main.html', **{'Spawn' : True, 'content': "How Many Machines do you want spawned?"})
+
+
+@app.route('/on_form', methods = ['POST', 'GET'])
+def turn_on_form():
+    if request.method == 'POST':
+
+        print "POSTING"
+        fl = request.form['num']
+
+
+        if fl != None:
+            u = url_for('on',num_instances=fl)
+            return redirect(u)
+
+    return render_template('main.html', **{'onn' : True, 'content': "How Many Machines do you want turned on?"})
+
+
 
 
 @app.route('/turn_on/<num_instances>')
@@ -120,6 +149,7 @@ def on(num_instances):
     # spinner.on(client, num_instances = int(num_instances))
     numOn = 0
     for x in client.show_active_droplets():
+        print x.id
         if numOn > int(num_instances):
             break
         else:
@@ -127,7 +157,8 @@ def on(num_instances):
             print "Turning On: " + str(numOn-1)
             spinner.turn_on_droplet(client, x.id)
 
-    return "Turned on " + str(num_instances) + " instances."
+        return render_template('main.html', **{'content': "Machines Turned On"})
+
 
 
 
