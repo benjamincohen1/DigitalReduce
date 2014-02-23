@@ -74,8 +74,13 @@ def start_job():
     distributer.main(data_path, function_path)
     # thread.start_new_thread(distributer.main, ('data_file.txt', 'func_file.txt'))
     # distributer.main('data_file.txt', 'func_file.txt')
-
-    return "ok"
+    s = ""
+    pth = os.path.join(app.config['UPLOAD_FOLDER'], 'results.txt')
+    #return pth
+    fl = open(pth)
+    for line in fl:
+	s += str(line.strip()) + "\n"
+    return s
 
 
 
@@ -121,4 +126,4 @@ def on(num_instances):
 
 if __name__ == '__main__':
     #app.run()
-    app.run(host='0.0.0.0',host=80)   
+    app.run(host='0.0.0.0',port=80)   
