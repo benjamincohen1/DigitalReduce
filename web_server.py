@@ -48,7 +48,7 @@ def new_job():
             print os.path.join(app.config['UPLOAD_FOLDER'], 'datafile')
 
             fl.save(os.path.join(app.config['UPLOAD_FOLDER'], 'datafile'))
-            map_fl.save(os.path.join(app.config['UPLOAD_FOLDER'], 'funcfile'))
+            map_fl.save(os.path.join(app.config['UPLOAD_FOLDER'], 'func_def.py'))
 
             print "SAVED"
             return redirect(url_for('start_job'))
