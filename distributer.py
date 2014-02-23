@@ -8,9 +8,14 @@ totals = {}
 t = 100
 class job_list(object):
     def __init__(self, text_file, num_jobs):
+        allJobs = []
 
+        i = open(text_file)
+        for line in i:
+            allJobs.append(i.strip())
 
-        self.allJobs = [x for x in range(1000,1150)]
+        # self.allJobs = [x for x in range(1000,1150)]
+        self.allJobs = allJobs
         self.num = 0
         self.jobs = len(self.allJobs)
 
